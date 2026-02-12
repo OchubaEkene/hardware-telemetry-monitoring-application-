@@ -27,7 +27,7 @@ A real-time hardware telemetry monitoring and analysis application built with Re
 ### Installation
 ```bash
 # Clone and install
-git clone [your-repo-url]
+git clone (https://github.com/OchubaEkene/hardware-telemetry-monitoring-application-.git)
 cd hardware-monitor-app
 npm install
 
