@@ -45,3 +45,9 @@ app-example
 
 # IDE
 .cursor/
+
+# Python
+__pycache__/
+*.pyc
+*.pyo
+.pytest_cache/
