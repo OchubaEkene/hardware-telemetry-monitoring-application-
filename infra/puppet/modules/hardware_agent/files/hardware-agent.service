@@ -1,0 +1,17 @@
+[Unit]
+Description=Hardware Telemetry Agent
+After=network.target
+StartLimitIntervalSec=0
+
+[Service]
+Type=simple
+WorkingDirectory=/opt/hardware-agent
+ExecStart=/usr/bin/python3 /opt/hardware-agent/agent.py
+Restart=on-failure
+RestartSec=5
+StandardOutput=journal
+StandardError=journal
+SyslogIdentifier=hardware-agent
+
+[Install]
+WantedBy=multi-user.target
