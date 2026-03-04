@@ -125,9 +125,10 @@ class TelemetryDatabase {
     const avgCpuTemp = recentLogs.reduce((sum, log) => sum + log.cpu_temp, 0) / recentLogs.length;
     const latestFanRpm = recentLogs[0]?.fan_rpm || 0;
 
-    // Calculate power trend
+    // Calculate power trend by comparing the current window against the preceding window
     const recentPower = recentLogs.reduce((sum, log) => sum + log.power_draw, 0) / recentLogs.length;
-    const olderLogs = this.logs.filter(log => log.timestamp >= cutoffTime * 2 && log.timestamp < cutoffTime);
+    const olderCutoffTime = Date.now() / 1000 - secondsAgo * 2;
+    const olderLogs = this.logs.filter(log => log.timestamp >= olderCutoffTime && log.timestamp < cutoffTime);
     const olderPower = olderLogs.length > 0 ? olderLogs.reduce((sum, log) => sum + log.power_draw, 0) / olderLogs.length : recentPower;
 
     let powerTrend: 'up' | 'down' | 'stable' = 'stable';

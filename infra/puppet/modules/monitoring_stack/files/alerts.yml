@@ -1,0 +1,38 @@
+groups:
+  - name: hardware_alerts
+    rules:
+      - alert: HardwareGPUTempCritical
+        expr: hardware_gpu_temp_celsius > 80
+        for: 1m
+        labels:
+          severity: critical
+        annotations:
+          summary: "GPU temperature critical on {{ $labels.instance }}"
+          description: "GPU temp is {{ $value }}°C (threshold: 80°C)"
+
+      - alert: HardwareCPUTempCritical
+        expr: hardware_cpu_temp_celsius > 80
+        for: 1m
+        labels:
+          severity: critical
+        annotations:
+          summary: "CPU temperature critical on {{ $labels.instance }}"
+          description: "CPU temp is {{ $value }}°C (threshold: 80°C)"
+
+      - alert: HardwareAgentDown
+        expr: up{job="hardware_agent"} == 0
+        for: 30s
+        labels:
+          severity: critical
+        annotations:
+          summary: "Hardware agent is down on {{ $labels.instance }}"
+          description: "The hardware telemetry agent has been unreachable for 30s"
+
+      - alert: HardwarePowerDrawHigh
+        expr: hardware_power_draw_watts > 200
+        for: 2m
+        labels:
+          severity: warning
+        annotations:
+          summary: "High power draw on {{ $labels.instance }}"
+          description: "Power draw is {{ $value }}W (threshold: 200W)"
